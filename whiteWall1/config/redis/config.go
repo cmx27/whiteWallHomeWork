@@ -21,5 +21,6 @@ func getConfig() redisConfig {
 	if config.Config.IsSet("redis.password") {
 		Info.DB = config.Config.GetInt("redis.password")
 	}
+
 	return Info
 }

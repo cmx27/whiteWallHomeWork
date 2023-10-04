@@ -5,6 +5,9 @@ import (
 	"log"
 	"whiteWall/config/config"
 
+	//"github.com/gin-contrib/sessions/mysql"
+	"gorm.io/gorm/logger"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,13 +17,15 @@ var DB *gorm.DB
 func Init() {
 	user := config.Config.GetString("database.user")
 	pass := config.Config.GetString("database.pass")
-	port := config.Config.GetString("database.port")
+	port := config.Config.GetString("database.DBport")
 	host := config.Config.GetString("database.host")
-	name := config.Config.GetString("database.name")
+	name := config.Config.GetString("database.DBname")
 
 	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8&parseTime=True&loc=Local", user, pass, host, port, name)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
+	fmt.Println(dsn)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		log.Fatal("Database connect failed: ", err)
 	}

@@ -9,8 +9,9 @@ import (
 func autoMigrate(db *gorm.DB) error {
 	err := db.AutoMigrate(
 		&models.User{},
-		&models.Artical{},
 		&models.Manager{},
+		&models.Student{},
+		&models.Artical{},
 	)
 
 	return err
