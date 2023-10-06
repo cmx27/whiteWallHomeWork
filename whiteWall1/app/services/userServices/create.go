@@ -3,6 +3,7 @@ package userServices
 import (
 	"whiteWall/app/models"
 	"whiteWall/app/utils"
+	"whiteWall/config/config"
 	"whiteWall/config/database"
 )
 
@@ -29,7 +30,8 @@ import (
 func CreateUser(password, account, name, sex, major, token string) error {
 	pass := utils.Encryrpt(password)
 	var manager_state bool
-	if token == "五花肉串串" {
+	value := config.Config.GetString("key.value")
+	if token == value {
 		manager_state = true
 
 		manager := &models.Manager{

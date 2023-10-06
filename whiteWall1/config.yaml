@@ -13,10 +13,9 @@ redis:
   host: "127.0.0.1"
   port: 6379
   db: 0
-  #user: root
   pass: 
 
-  # router:
-  # port:
+key:
+  value: "五花肉串串"
 
 allow_origins: "http://127.0.0.1:"
