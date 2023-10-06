@@ -16,10 +16,6 @@ func init() {
 	Config.WatchConfig() // 自动将配置读入Config变量
 	err := Config.ReadInConfig()
 	if err != nil {
-		log.Println(err)
+		log.Fatal("Config not find", err)
 	}
-	// err = Config.Unmarshal()
-	// if err != nil {
-	// 	log.Println(Config)
-	// }
 }

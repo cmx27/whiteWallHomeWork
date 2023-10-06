@@ -2,9 +2,9 @@ package userServices
 
 import (
 	"errors"
-	"log"
+	"net/http"
 	"whiteWall/app/models"
-	"whiteWall/app/services/userServices/configServices"
+	"whiteWall/app/services/managerServices"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -12,23 +12,30 @@ import (
 
 func SetUserSession(c *gin.Context, user *models.User) error {
 	webSession := sessions.Default(c)
-	webSession.Options(sessions.Options{MaxAge: 3600 * 24 * 7})
+	webSession.Options(sessions.Options{MaxAge: 3600 * 24 * 7, Path: "/api", Secure: false, SameSite: http.SameSiteNoneMode})
 	webSession.Set("id", user.UserID)
-	log.Println(webSession)
+	webSession.Set("user_id", user.UserID)
+	webSession.Set("state", user.ManagerState)
+
 	return webSession.Save()
 }
 
-func GetUserSession(c *gin.Context) error {
+func GetUserSession(c *gin.Context) (*models.Manager, error) {
 	webSession := sessions.Default(c)
-	id := webSession.Get("id")
+	id := webSession.Get("user_id")
+	state := webSession.Get("state")
 	if id == nil {
-		return errors.New("")
+		return nil, errors.New("id")
 	}
-	if id != configServices.GetConfig("admin") {
+	if state == 0 {
+		return nil, errors.New("stste")
+	}
+	manager, _ := managerServices.GetManagerByID(id.(uint))
+	if manager == nil {
 		ClearUserSession(c)
-		return errors.New("")
+		return nil, errors.New("manager")
 	}
-	return nil
+	return manager, nil
 }
 
 // func UpdateUserSession(c *gin.Context) error { //为什么没有被调用
@@ -45,7 +52,7 @@ func GetUserSession(c *gin.Context) error {
 
 func CheckUserSession(c *gin.Context) bool {
 	webSession := sessions.Default(c)
-	id := webSession.Get("id")
+	id := webSession.Get("user_id")
 	if id == nil {
 		return false
 	}
@@ -54,7 +61,7 @@ func CheckUserSession(c *gin.Context) bool {
 
 func ClearUserSession(c *gin.Context) {
 	webSession := sessions.Default(c)
-	webSession.Delete("id")
+	webSession.Delete("user_id")
 	webSession.Save()
 	return
 }

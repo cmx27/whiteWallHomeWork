@@ -9,7 +9,6 @@ import (
 )
 
 type DeleteArticalData struct {
-	//Name      string `json:"name" binding:"required"`
 	ArticalID uint `json:"artical_id" binding:"required"`
 	UserID    uint `json:"user_id" binding:"required"`
 }

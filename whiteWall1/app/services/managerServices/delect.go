@@ -17,6 +17,12 @@ func DeleteUserByUserID(user_id uint) error {
 	if result.Error != nil {
 		return result.Error
 	}
+	result3 := database.DB.Where(&models.Student{
+		StudentID: user_id,
+	}).Delete(&models.User{})
+	if result3.Error != nil {
+		return result3.Error
+	}
 	result2 := database.DB.Where(&models.Artical{
 		UserID: user_id,
 	}).Delete(&models.Artical{})

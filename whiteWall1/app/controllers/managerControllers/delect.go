@@ -3,6 +3,7 @@ package managerControllers
 import (
 	"log"
 	"whiteWall/app/services/managerServices"
+	"whiteWall/app/services/userServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,14 @@ func MDeleteArtical(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
+	//鉴别权限
+	_, err = userServices.GetUserSession(c)
+	if err != nil {
+		log.Println(err)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
 	}
 
 	//删除
@@ -31,7 +40,7 @@ func MDeleteArtical(c *gin.Context) {
 }
 
 type MDeleteUserData struct {
-	UserID uint `json:"user_id" binding:"required"`
+	UserID uint `json:"user_id" binding:"required"` //student_id
 }
 
 // 删除用户
@@ -41,6 +50,14 @@ func MDeleteUser(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
+	}
+
+	//鉴别权限
+	_, err = userServices.GetUserSession(c)
+	if err != nil {
+		log.Println(err)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
 	}
 
 	//删除

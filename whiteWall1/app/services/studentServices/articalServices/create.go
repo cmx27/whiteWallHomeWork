@@ -6,9 +6,9 @@ import (
 )
 
 func CreateArtical(name, artical string, name_state bool, user_id uint) error {
-	if name_state {
-		name = "匿名"
-	}
+	// if name_state {
+	// 	name = "匿名"
+	// }
 	content := &models.Artical{
 		Name:      name,
 		Namestate: name_state,

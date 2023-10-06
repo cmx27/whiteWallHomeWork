@@ -1,18 +1,15 @@
 package articalControllers
 
 import (
-	//"whiteWall/app/models"
-
 	"log"
 	"whiteWall/app/services/studentServices/articalServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
-	//"gorm.io/gorm"
 )
 
 type CreateArticalData struct {
-	Name      string `json:"name" binding:"required"`
+	//Name      string `json:"name" binding:"required"`
 	Namestate *bool  `json:"name_state" binding:"required"`
 	Artical   string `json:"artical" binding:"required"`
 	UserID    uint   `json:"user_id" binding:"required"`
@@ -27,8 +24,15 @@ func CreateArtical(c *gin.Context) {
 		utils.JsonErrorResponse(c, 200501, "参数错误")
 		return
 	}
+	//getUserByID
+	student,err := articalServices.GetStusentByUserID(data.UserID)
+	if err != nil {
+		log.Println(err)
+		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
 	//存入数据库
-	err = articalServices.CreateArtical(data.Name, data.Artical, *data.Namestate, data.UserID)
+	err = articalServices.CreateArtical(student.Name, data.Artical, *data.Namestate, data.UserID)
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)

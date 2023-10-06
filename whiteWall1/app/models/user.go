@@ -1,7 +1,8 @@
 package models
 
 type User struct {
-	UserID       uint   `json:"user_id" gorm:"AUTO_INCREMENT"`
+	ID           uint   `json:"id"`
+	UserID       uint   `json:"user_id"`
 	Account      string `json:"account"`
 	Password     string `json:"-"`
 	Name         string `json:"name"`
@@ -9,8 +10,11 @@ type User struct {
 }
 
 type Student struct {
-	StudentID uint `json:"student_id" gorm:"primary_key"`
-	User
-	Sex   string `json:"sex"`
-	Major string `json:"major"`
+	StudentID    uint   `json:"student_id" gorm:"primary_key"`
+	Sex          string `json:"sex"`
+	Major        string `json:"major"`
+	Account      string `json:"account"`
+	Password     string `json:"-"`
+	Name         string `json:"name"`
+	ManagerState bool   `json:"manager_state"`
 }

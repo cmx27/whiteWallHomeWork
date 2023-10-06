@@ -1,15 +1,12 @@
 package articalControllers
 
 import (
-	//"whiteWall/app/models"
-
 	"log"
-	//"whiteWall/app/models"
+
 	"whiteWall/app/services/studentServices/articalServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
-	//"gorm.io/gorm"
 )
 
 type PUTArticalData struct {
@@ -29,7 +26,7 @@ func PUTArtical(c *gin.Context) {
 	}
 
 	// 判断是否是同一个人，获取文章信息
-	//var artical *models.Artical
+
 	_, err = articalServices.GetArticalByUserIDAndArticalID(data.UserID, data.ArticalID)
 	if err != nil {
 		utils.JsonErrorResponse(c, 406, "参数错误（不是同一个人或文章不存在）")

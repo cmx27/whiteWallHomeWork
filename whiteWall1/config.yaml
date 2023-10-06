@@ -5,7 +5,7 @@ database:
   user: root
   pass: jhwl2023
 
-  session:
+session:
   name: name-session
   driver: redis
 

@@ -16,6 +16,18 @@ func GetUser() ([]models.User, error) {
 	return user_list, nil
 }
 
+func GetManagerByID(id uint) (*models.Manager, error) {
+	manager := models.Manager{}
+	result := database.DB.Where(&models.Manager{
+		ManagerID: id,
+	}).First(&manager)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &manager, nil
+}
+
 func GetArtical() ([]models.Artical, error) {
 	var artical_list []models.Artical
 	//fmt.Println(models.Num)

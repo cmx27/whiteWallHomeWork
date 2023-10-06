@@ -23,6 +23,7 @@ func Init(r *gin.Engine) {
 			artical.PUT("", articalControllers.PUTArtical)
 			artical.DELETE("", articalControllers.DeleteArtical)
 			artical.GET("", articalControllers.GetArtical)
+			artical.GET("/others", articalControllers.GetOthersArtical)
 		}
 
 		api.POST("/student/wall-image", imageControllers.CreateImage)

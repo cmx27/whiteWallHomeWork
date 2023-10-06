@@ -5,7 +5,6 @@ import (
 	"log"
 	"whiteWall/config/config"
 
-	//"github.com/gin-contrib/sessions/mysql"
 	"gorm.io/gorm/logger"
 
 	"gorm.io/driver/mysql"
