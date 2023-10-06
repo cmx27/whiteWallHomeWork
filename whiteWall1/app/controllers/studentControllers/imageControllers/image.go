@@ -144,7 +144,7 @@ func CreateImage(c *gin.Context) {
 
 	//获取图片路径，并存入数据库
 
-	//os.rename(source_file, target_file)
+	//os.rename(source_file, target_file)time.go
 
 	//存入数据库
 	err = articalServices.UpdateImage(data.UserID, imageAddr)
