@@ -10,6 +10,6 @@ func CheckArtical(artical_id uint) error {
 	return result.Error
 }
 
-func CompareUser(user1 string, user2 string) bool {
-	return user1 == user2
-}
+// func CompareUser(user1 string, user2 string) bool {
+// 	return user1 == user2
+// }

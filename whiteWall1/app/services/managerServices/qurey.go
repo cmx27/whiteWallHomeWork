@@ -1,19 +1,17 @@
 package managerServices
 
 import (
-	//"fmt"
-	//"log"
 	"whiteWall/app/models"
 	"whiteWall/config/database"
 )
 
-func GetUser() ([]models.User, error) {
-	var user_list []models.User
-	result := database.DB.Where(&models.User{}).Find(&user_list)
+func GetStudent() ([]models.Student, error) {
+	var student_list []models.Student
+	result := database.DB.Where(&models.Student{}).Find(&student_list)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return user_list, nil
+	return student_list, nil
 }
 
 func GetManagerByID(id uint) (*models.Manager, error) {

@@ -17,13 +17,13 @@ func GetUser(c *gin.Context) {
 		utils.JsonErrorResponse(c, 500, "session")
 		return
 	}
-	user_list, err := managerServices.GetUser()
+	student_list, err := managerServices.GetStudent()
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
 	}
 	utils.JsonSuccessResponse(c, gin.H{
-		"user_list": user_list,
+		"user_list": student_list,
 	})
 }
 
