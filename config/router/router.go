@@ -33,6 +33,7 @@ func Init(r *gin.Engine) {
 			manager.DELETE("/artical", managerControllers.MDeleteArtical)
 			manager.DELETE("/user", managerControllers.MDeleteUser)
 			manager.DELETE("/black-list", managerControllers.BlackList)
+			manager.PUT("/black-list", managerControllers.PutBlackList)
 			manager.GET("/user", managerControllers.GetUser)
 			manager.GET("/artical", managerControllers.GetArtical)
 		}

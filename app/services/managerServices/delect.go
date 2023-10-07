@@ -11,9 +11,7 @@ func DeleteArticalByArticalID(artical_id uint) error {
 }
 
 func DeleteUserByUserID(user_id uint) error {
-	result := database.DB.Unscoped().Where(&models.User{
-		UserID: user_id,
-	}).Delete(&models.User{})
+	result := database.DB.Unscoped().Where("user_id = ?", user_id).Where("manager_state <> ?", true).Delete(&models.User{})
 	if result.Error != nil {
 		return result.Error
 	}

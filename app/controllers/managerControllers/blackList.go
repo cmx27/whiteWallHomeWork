@@ -11,7 +11,7 @@ import (
 )
 
 type BlackListData struct {
-	Time   int  `json:"time" binding:"required"`
+	//Time   int  `json:"time" binding:"required"`
 	UserID uint `json:"user_id" binding:"required"`
 }
 
@@ -32,8 +32,35 @@ func BlackList(c *gin.Context) {
 	}
 
 	//删除
-	err = managerServices.BlackDeleteUserByUserID(data.UserID, data.Time)
+	err = managerServices.BlackDeleteUserByUserID(data.UserID)
 	if err != nil {
+		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
+	utils.JsonSuccessResponse(c, nil)
+
+}
+
+func PutBlackList(c *gin.Context) {
+	var data BlackListData
+	err := c.ShouldBindJSON(&data)
+	if err != nil {
+		log.Println(err)
+		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
+	//鉴别权限
+	_, err = userServices.GetManagerSession(c)
+	if err != nil {
+		log.Println(err)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
+	}
+
+	//恢复
+	err = managerServices.BlackPutUserByUserID(data.UserID)
+	if err != nil {
+		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
 		return
 	}
