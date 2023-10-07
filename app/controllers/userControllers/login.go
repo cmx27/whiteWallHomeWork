@@ -2,12 +2,9 @@ package userControllers
 
 import (
 	"log"
-	//"whiteWall/app/models"
 	"whiteWall/app/services/userServices"
-	//"whiteWall/app/services/userServices/configServices"
 	"whiteWall/app/utils"
 
-	//"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 

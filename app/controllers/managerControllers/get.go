@@ -11,7 +11,7 @@ import (
 
 func GetUser(c *gin.Context) {
 	//鉴别权限
-	_, err := userServices.GetUserSession(c)
+	_, err := userServices.GetManagerSession(c)
 	if err != nil {
 		log.Println(err)
 		utils.JsonErrorResponse(c, 500, "session")
@@ -29,7 +29,7 @@ func GetUser(c *gin.Context) {
 
 func GetArtical(c *gin.Context) {
 	//鉴别权限
-	_, err := userServices.GetUserSession(c)
+	_, err := userServices.GetManagerSession(c)
 	if err != nil {
 		log.Println(err)
 		utils.JsonErrorResponse(c, 500, "session")

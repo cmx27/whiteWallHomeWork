@@ -3,24 +3,21 @@ package articalControllers
 import (
 	"log"
 	"whiteWall/app/services/studentServices/articalServices"
+	"whiteWall/app/services/userServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
-type GetArticalData struct {
-	UserID uint `json:"user_id" binding:"required"`
-}
-
 func GetArtical(c *gin.Context) {
-	var data GetArticalData
-	err := c.ShouldBindJSON(&data)
+	//鉴别权限
+	student, err := userServices.GetStudentSession(c)
 	if err != nil {
 		log.Println(err)
-		utils.JsonInternalServerErrorResponse(c)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
 	}
-
-	artical_list, err := articalServices.GetArticalByUserID(data.UserID)
+	artical_list, err := articalServices.GetArticalByUserID(student.StudentID)
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)

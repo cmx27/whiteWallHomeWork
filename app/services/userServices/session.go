@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"whiteWall/app/models"
 	"whiteWall/app/services/managerServices"
+	"whiteWall/app/services/studentServices/articalServices"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,7 @@ func SetUserSession(c *gin.Context, user *models.User) error {
 	return webSession.Save()
 }
 
-func GetUserSession(c *gin.Context) (*models.Manager, error) {
+func GetManagerSession(c *gin.Context) (*models.Manager, error) {
 	webSession := sessions.Default(c)
 	id := webSession.Get("user_id")
 	state := webSession.Get("state")
@@ -38,8 +39,26 @@ func GetUserSession(c *gin.Context) (*models.Manager, error) {
 	return manager, nil
 }
 
+func GetStudentSession(c *gin.Context) (*models.Student, error) {
+	webSession := sessions.Default(c)
+	id := webSession.Get("user_id")
+	state := webSession.Get("state")
+	if id == nil {
+		return nil, errors.New("id")
+	}
+	if state == 0 {
+		return nil, errors.New("stste")
+	}
+	student, _ := articalServices.GetStudentByUserID(id.(uint))
+	if student == nil {
+		ClearUserSession(c)
+		return nil, errors.New("manager")
+	}
+	return student, nil
+}
+
 // func UpdateUserSession(c *gin.Context) error { //为什么没有被调用
-// 	err := GetUserSession(c)
+// 	err := GetManagerSession(c)
 // 	if err != nil {
 // 		return err
 // 	}

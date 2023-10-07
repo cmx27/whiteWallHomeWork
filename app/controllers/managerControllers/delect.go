@@ -23,7 +23,7 @@ func MDeleteArtical(c *gin.Context) {
 		return
 	}
 	//鉴别权限
-	_, err = userServices.GetUserSession(c)
+	_, err = userServices.GetManagerSession(c)
 	if err != nil {
 		log.Println(err)
 		utils.JsonErrorResponse(c, 500, "session")
@@ -53,7 +53,7 @@ func MDeleteUser(c *gin.Context) {
 	}
 
 	//鉴别权限
-	_, err = userServices.GetUserSession(c)
+	_, err = userServices.GetManagerSession(c)
 	if err != nil {
 		log.Println(err)
 		utils.JsonErrorResponse(c, 500, "session")

@@ -5,7 +5,7 @@ import (
 	"whiteWall/config/database"
 )
 
-func GetStusentByUserID(id uint) (*models.Student, error) {
+func GetStudentByUserID(id uint) (*models.Student, error) {
 	var student models.Student
 	result := database.DB.Where(&models.Student{
 		StudentID: id,
