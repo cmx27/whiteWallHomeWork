@@ -9,6 +9,7 @@ type User struct {
 	Password     string `json:"-"`
 	Name         string `json:"name"`
 	ManagerState bool   `json:"manager_state"`
+	BlackState   bool   `json:"black_state" default:"false"`
 }
 
 type Student struct {

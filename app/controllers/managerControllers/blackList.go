@@ -7,11 +7,9 @@ import (
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
-	//"github.com/robfig/cron/v3"
 )
 
 type BlackListData struct {
-	//Time   int  `json:"time" binding:"required"`
 	UserID uint `json:"user_id" binding:"required"`
 }
 
@@ -31,7 +29,7 @@ func BlackList(c *gin.Context) {
 		return
 	}
 
-	//删除
+	//加入黑名单
 	err = managerServices.BlackDeleteUserByUserID(data.UserID)
 	if err != nil {
 		utils.JsonInternalServerErrorResponse(c)

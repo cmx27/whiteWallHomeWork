@@ -7,26 +7,6 @@ import (
 	"whiteWall/config/database"
 )
 
-// func CreateUser(password, account, name, sex, major string) error {
-// 	pass := utils.Encryrpt(password)
-// 	//var manager_state bool
-// 	manager_state := false
-// 	user := &models.User{
-// 		Account:      account,
-// 		Password:     pass,
-// 		Name:         name,
-// 		Sex:          sex,
-// 		Major:        major,
-// 		ManagerState: manager_state,
-// 	}
-// 	result := database.DB.Create(user)
-// 	if result.Error != nil {
-// 		return result.Error
-// 	} else {
-// 		return nil
-// 	}
-// }
-
 func CreateUser(password, account, name, sex, major, token string) error {
 	pass := utils.Encryrpt(password)
 	var manager_state bool

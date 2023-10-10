@@ -16,3 +16,15 @@ func GetUserByAccount(account string) (*models.User, error) {
 	}
 	return &user, nil
 }
+
+func GetUserByUserID(id uint) (*models.User, error) {
+	user := models.User{}
+	result := database.DB.Where(&models.User{
+		UserID: id,
+	}).First(&user)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &user, nil
+}

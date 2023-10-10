@@ -11,7 +11,6 @@ import (
 )
 
 type PUTArticalData struct {
-	//UserID    uint   `json:"user_id" binding:"required"`
 	ArticalID uint   `json:"artical_id" binding:"required"`
 	Artical   string `json:"artical" binding:"required"`
 }
@@ -33,10 +32,16 @@ func PUTArtical(c *gin.Context) {
 		utils.JsonErrorResponse(c, 500, "session")
 		return
 	}
+	//判断是否在黑名单
+	black := student.BlackState
+	if black {
+		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
+		return
+	}
 
 	// 判断是否是同一个人，获取文章信息
 
-	_, err = articalServices.GetArticalByUserIDAndArticalID(student.StudentID, data.ArticalID)
+	_, err = articalServices.GetArticalByUserIDAndArticalID(student.UserID, data.ArticalID)
 	if err != nil {
 		utils.JsonErrorResponse(c, 406, "参数错误（不是同一个人或文章不存在）")
 		return

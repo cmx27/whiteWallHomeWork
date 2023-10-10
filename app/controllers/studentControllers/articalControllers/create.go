@@ -10,10 +10,8 @@ import (
 )
 
 type CreateArticalData struct {
-	//Name      string `json:"name" binding:"required"`
 	Namestate *bool  `json:"name_state" binding:"required"`
 	Artical   string `json:"artical" binding:"required"`
-	//UserID    uint   `json:"user_id" binding:"required"`
 }
 
 // 发布文章
@@ -33,9 +31,15 @@ func CreateArtical(c *gin.Context) {
 		utils.JsonErrorResponse(c, 500, "session")
 		return
 	}
+	//判断是否在黑名单
+	black := student.BlackState
+	if black {
+		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
+		return
+	}
 
 	//存入数据库
-	err = articalServices.CreateArtical(student.Name, data.Artical, *data.Namestate, student.StudentID)
+	err = articalServices.CreateArtical(student.Name, data.Artical, *data.Namestate, student.UserID)
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)

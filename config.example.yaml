@@ -1,0 +1,20 @@
+database:
+  DBname: mysql
+  host: "127.0.0.1"
+  DBport: 3306
+  user: new_root
+  pass: Zyx2004.12.27
+
+session:
+  name: name-session
+  driver: redis
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  db: 0
+  pass: jhwl2023
+
+key:
+  value: "五花肉串串"
+#allow_origins: "http://175.27.251.203:"

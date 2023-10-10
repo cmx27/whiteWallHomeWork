@@ -4,7 +4,6 @@ database:
   DBport: 3306
   user: root
   pass: jhwl2023
-
 session:
   name: name-session
   driver: redis
@@ -13,9 +12,9 @@ redis:
   host: "127.0.0.1"
   port: 6379
   db: 0
-  pass: 
+  pass:
 
 key:
   value: "五花肉串串"
 
-allow_origins: "http://127.0.0.1:"
+allow_origins: "*"

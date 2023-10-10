@@ -35,6 +35,14 @@ func Login(c *gin.Context) {
 		utils.JsonResponse(c, 405, 400, "密码错误", nil)
 		return
 	}
+
+	//判断是否在黑名单
+	black := user.BlackState
+	if black {
+		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
+		return
+	}
+
 	//session
 	err = userServices.SetUserSession(c, user)
 	if err != nil {
