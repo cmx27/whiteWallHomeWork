@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+
 	database.Init()
 	r := gin.Default()
 	r.Use(corsConfig.GetCors())
@@ -20,8 +21,8 @@ func main() {
 	r.NoRoute(midwares.HandleNotFound)
 	session.Init(r)
 	router.Init(r)
-	router := gin.Default()
-	router.SetTrustedProxies([]string{"127.0.0.1"})
+	// router := gin.Default()
+	// router.SetTrustedProxies([]string{"127.0.0.1"})
 
 	err := r.Run()
 	if err != nil {

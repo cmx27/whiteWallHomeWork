@@ -7,7 +7,6 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	//"github.com/jinzhu/gorm"
 )
 
 type RegisterData struct {
@@ -42,7 +41,7 @@ func Register(c *gin.Context) {
 		return
 	}
 	//判断密码是否正确
-	flag := userServices.CheckUserBYAccountAndPassword(data.RePassword, data.Password)
+	flag := userServices.ComparePwd(data.RePassword, data.Password)
 	if !flag {
 		utils.JsonResponse(c, 405, 400, "密码错误", nil)
 		return

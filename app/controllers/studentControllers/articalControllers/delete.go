@@ -2,7 +2,6 @@ package articalControllers
 
 import (
 	"log"
-	"whiteWall/app/models"
 	"whiteWall/app/services/studentServices/articalServices"
 	"whiteWall/app/services/userServices"
 	"whiteWall/app/utils"
@@ -35,16 +34,15 @@ func DeleteArtical(c *gin.Context) {
 		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
 		return
 	}
-	// 判断是否是同一个人，获取文章信息
-	var artical *models.Artical
-	artical, err = articalServices.GetArticalByUserIDAndArticalID(student.UserID, data.ArticalID)
+	// 判断是否是同一个人
+	_, err = articalServices.GetArticalByUserIDAndArticalID(student.UserID, data.ArticalID)
 	if err != nil {
 		utils.JsonErrorResponse(c, 406, "参数错误（不是同一个人或文章不存在）")
 		return
 	}
 
 	//删除
-	err = articalServices.DeleteArtical(artical.ArticalID)
+	err = articalServices.DeleteArtical(data.ArticalID)
 	if err != nil {
 		utils.JsonInternalServerErrorResponse(c)
 		return

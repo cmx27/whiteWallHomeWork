@@ -18,7 +18,7 @@ func Login(c *gin.Context) {
 	var data LoginData
 	err := c.ShouldBindJSON(&data)
 	if err != nil {
-		log.Panicln(err)
+		log.Println(err)
 		utils.JsonErrorResponse(c, 200501, "参数错误")
 		return
 	}

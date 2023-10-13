@@ -27,7 +27,7 @@ func GetManagerSession(c *gin.Context) (*models.Manager, error) {
 	if id == nil {
 		return nil, errors.New("id")
 	}
-	if state == 0 {
+	if state != true {
 		return nil, errors.New("stste")
 	}
 	manager, _ := managerServices.GetManagerByID(id.(uint))

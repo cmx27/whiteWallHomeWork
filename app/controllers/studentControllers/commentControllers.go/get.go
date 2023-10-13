@@ -2,14 +2,14 @@ package commentControllers
 
 import (
 	"log"
-	"whiteWall/app/services/studentServices/articalServices"
+	"whiteWall/app/services/studentServices/commentServices"
 	"whiteWall/app/services/userServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
-func GetArtical(c *gin.Context) {
+func GetMyComment(c *gin.Context) {
 	//鉴别权限
 	student, err := userServices.GetStudentSession(c)
 	if err != nil {
@@ -23,22 +23,22 @@ func GetArtical(c *gin.Context) {
 		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
 		return
 	}
-	artical_list, err := articalServices.GetArticalByUserID(student.UserID)
+	comment_list, err := commentServices.GetCommentByUserID(student.UserID)
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
 	}
 	utils.JsonSuccessResponse(c, gin.H{
-		"artical_list": artical_list,
+		"comment_list": comment_list,
 	})
 }
 
-type GetOtherArticalData struct {
+type GetArticalCommentData struct {
 	ArticalID uint `json:"artical_id" binding:"required"`
 }
 
-func GetOthersArtical(c *gin.Context) {
-	var data GetOtherArticalData
+func GetArticalComment(c *gin.Context) {
+	var data GetArticalCommentData
 	err := c.ShouldBindJSON(&data)
 	if err != nil {
 		log.Println(err)
@@ -60,10 +60,12 @@ func GetOthersArtical(c *gin.Context) {
 		return
 	}
 
-	artical, err := articalServices.GetArticalByArticalID(data.ArticalID)
+	comment_list, err := commentServices.GetCommentByArticalID(data.ArticalID)
 	if err != nil {
 		log.Println(err)
 		utils.JsonInternalServerErrorResponse(c)
 	}
-	utils.JsonSuccessResponse(c, artical)
+	utils.JsonSuccessResponse(c, gin.H{
+		"comment_list": comment_list,
+	})
 }

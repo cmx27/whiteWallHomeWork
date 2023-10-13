@@ -2,21 +2,20 @@ package commentControllers
 
 import (
 	"log"
-	"whiteWall/app/models"
-	"whiteWall/app/services/studentServices/articalServices"
+	"whiteWall/app/services/studentServices/commentServices"
 	"whiteWall/app/services/userServices"
 	"whiteWall/app/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
-type DeleteArticalData struct {
-	ArticalID uint `json:"artical_id" binding:"required"`
+type DeleteCommentData struct {
+	CommentID uint `json:"comment_id" binding:"required"`
 }
 
 // 删除文章
-func DeleteArtical(c *gin.Context) {
-	var data DeleteArticalData
+func DeleteComment(c *gin.Context) {
+	var data DeleteCommentData
 	err := c.ShouldBindJSON(&data)
 	if err != nil {
 		utils.JsonErrorResponse(c, 200501, "参数错误")
@@ -35,16 +34,15 @@ func DeleteArtical(c *gin.Context) {
 		utils.JsonResponse(c, 405, 400, "您在小黑屋", nil)
 		return
 	}
-	// 判断是否是同一个人，获取文章信息
-	var artical *models.Artical
-	artical, err = articalServices.GetArticalByUserIDAndArticalID(student.UserID, data.ArticalID)
+	// 判断是否是同一个人
+	_, err = commentServices.GetCommmentByUserIDAndCommentID(student.UserID, data.CommentID)
 	if err != nil {
 		utils.JsonErrorResponse(c, 406, "参数错误（不是同一个人或文章不存在）")
 		return
 	}
 
 	//删除
-	err = articalServices.DeleteArtical(artical.ArticalID)
+	err = commentServices.DeleteComment(data.CommentID)
 	if err != nil {
 		utils.JsonInternalServerErrorResponse(c)
 		return

@@ -39,8 +39,37 @@ func MDeleteArtical(c *gin.Context) {
 	utils.JsonSuccessResponse(c, nil)
 }
 
+type MDeleteCommentData struct {
+	CommentID uint `json:"comment_id" binding:"required"`
+}
+
+func MDeleteComment(c *gin.Context) {
+	var data MDeleteCommentData
+	err := c.ShouldBindJSON(&data)
+	if err != nil {
+		log.Println(err)
+		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
+	//鉴别权限
+	_, err = userServices.GetManagerSession(c)
+	if err != nil {
+		log.Println(err)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
+	}
+
+	//删除
+	err = managerServices.DeleteCommentByCommentID(data.CommentID)
+	if err != nil {
+		utils.JsonInternalServerErrorResponse(c)
+		return
+	}
+	utils.JsonSuccessResponse(c, nil)
+}
+
 type MDeleteUserData struct {
-	UserID uint `json:"user_id" binding:"required"` //student_id
+	UserID uint `json:"user_id" binding:"required"`
 }
 
 // 删除用户

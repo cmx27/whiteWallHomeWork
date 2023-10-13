@@ -12,6 +12,7 @@ func autoMigrate(db *gorm.DB) error {
 		&models.Manager{},
 		&models.Student{},
 		&models.Artical{},
+		&models.Comment{},
 	)
 
 	return err

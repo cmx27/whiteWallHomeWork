@@ -44,3 +44,21 @@ func GetArtical(c *gin.Context) {
 		"artical_list": artical_list,
 	})
 }
+
+func GetComment(c *gin.Context) {
+	//鉴别权限
+	_, err := userServices.GetManagerSession(c)
+	if err != nil {
+		log.Println(err)
+		utils.JsonErrorResponse(c, 500, "session")
+		return
+	}
+	comment_list, err := managerServices.GetComment()
+	if err != nil {
+		log.Println(err)
+		utils.JsonInternalServerErrorResponse(c)
+	}
+	utils.JsonSuccessResponse(c, gin.H{
+		"comment_list": comment_list,
+	})
+}

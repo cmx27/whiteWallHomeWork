@@ -1,9 +1,9 @@
 database:
-  DBname: wallgorm
+  DBname: mysql
   host: "127.0.0.1"
   DBport: 3306
-  user: root
-  pass: jhwl2023
+  user: new_root
+  pass: Zyx2004.12.27
 session:
   name: name-session
   driver: redis
@@ -12,7 +12,7 @@ redis:
   host: "127.0.0.1"
   port: 6379
   db: 0
-  pass:
+  pass: 
 
 key:
   value: "五花肉串串"

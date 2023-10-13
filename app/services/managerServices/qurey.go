@@ -34,3 +34,12 @@ func GetArtical() ([]models.Artical, error) {
 	}
 	return artical_list, nil
 }
+
+func GetComment() ([]models.Comment, error) {
+	var comment_list []models.Comment
+	result := database.DB.Find(&comment_list)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return comment_list, nil
+}
